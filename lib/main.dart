@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:omni_grid/omni_grid.dart';
 
 void main() {
@@ -87,11 +88,13 @@ class _MyHomePageState extends State<MyHomePage> {
           // the App.build method, and use it to set our appbar title.
           title: Text(widget.title),
         ),
-        body: const Center(
+        body: Center(
             // Center is a layout widget. It takes a single child and positions it
             // in the middle of the parent.
             child: OmniGrid(
-          children: [
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          children: const [
             ColoredBox(color: Colors.amber),
             ColoredBox(color: Colors.red),
             ColoredBox(color: Colors.green),
