@@ -40,33 +40,38 @@ class _OmniGridState extends State<OmniGrid> {
         (widget.children.length / widget.crossAxisCount).ceil();
     final gridWidth = widget.width * widget.crossAxisCount;
     final gridHeight = widget.height * mainAxisCount;
-    return ValueListenableBuilder(
-      valueListenable: _gridOffsetNotifier,
-      builder: (context, Offset gridOffset, child) {
-        return TweenAnimationBuilder(
-          duration: _animationDuration,
-          curve: Curves.easeOutSine,
-          tween: Tween<Offset>(begin: Offset.zero, end: gridOffset),
-          builder: (context, Offset offset, Widget? child) {
-            return Transform(
-              transform: Matrix4.identity()
-                ..setTranslationRaw(offset.dx, offset.dy, 0),
-              child: child,
-            );
-          },
-          child: child,
-        );
-      },
-      child: SizedBox(
-        width: gridWidth,
-        height: gridHeight,
-        child: GridView.builder(
-          itemCount: widget.children.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: widget.crossAxisCount,
-            childAspectRatio: widget.width / widget.height,
+    return OverflowBox(
+      maxHeight: double.infinity,
+      maxWidth: double.infinity,
+      alignment: Alignment.topLeft,
+      child: ValueListenableBuilder(
+        valueListenable: _gridOffsetNotifier,
+        builder: (context, Offset gridOffset, child) {
+          return TweenAnimationBuilder(
+            duration: _animationDuration,
+            curve: Curves.easeOutSine,
+            tween: Tween<Offset>(begin: Offset.zero, end: gridOffset),
+            builder: (context, Offset offset, Widget? child) {
+              return Transform(
+                transform: Matrix4.identity()
+                  ..setTranslationRaw(offset.dx, offset.dy, 0),
+                child: child,
+              );
+            },
+            child: child,
+          );
+        },
+        child: SizedBox(
+          width: gridWidth,
+          height: gridHeight,
+          child: GridView.builder(
+            itemCount: widget.children.length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: widget.crossAxisCount,
+              childAspectRatio: widget.width / widget.height,
+            ),
+            itemBuilder: (_, index) => widget.children[index],
           ),
-          itemBuilder: (_, index) => widget.children[index],
         ),
       ),
     );
