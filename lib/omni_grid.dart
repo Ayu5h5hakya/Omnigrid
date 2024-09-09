@@ -22,10 +22,14 @@ class _OmniGridState extends State<OmniGrid> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return GridView.builder(
       itemCount: widget.children.length,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2, childAspectRatio: 1.0),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 1,
+        childAspectRatio: width / height,
+      ),
       itemBuilder: (_, index) => widget.children[index],
     );
   }
